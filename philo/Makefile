@@ -16,45 +16,31 @@ HEADER = $(NAME).h
 
 SRC =	main.c \
 
-BONUS_FLAG = -DBONUS_FLAG
 FLAGS = -Wall -Wextra #-Werror
 FSAN = -fsanitize=address
-OBJ = $(addprefix obj/,$(SRC:.c=.o))
-OBJ_BONUS = $(addprefix bonus/,$(SRC:.c=.o))
+BUILD = $(addprefix build/,$(SRC:.c=.o))
 
-all	: create_obj_folder
-#	make -C libft
+all	: create_build_folder
 	make $(NAME)
 	@make end_message
 
-obj/%.o : src/%.c include/$(HEADER) Makefile
-	cc -c -g3 ${FLAGS} $(FSAN) $< -o $@ -I include #-I libft
+build/%.o : src/%.c include/$(HEADER) Makefile
+	cc -c -g3 $(FLAGS) $(FSAN) $< -o $@ -I include
 
-bonus/%.o : src/%.c include/$(HEADER) Makefile
-	cc -c -g3 -O3 ${FLAGS} $(FSAN) $(BONUS_FLAG) $< -o $@ -I include #-I libft
+$(NAME): $(BUILD)
+	cc $(BUILD) $(FSAN) -g3 -o $(NAME)
 
-$(NAME): $(OBJ) #libft/libft.a
-	cc $(OBJ) $(FSAN) -g3 -o $(NAME) #-L ./libft -lft
-
-$(NAME)_bonus: $(OBJ_BONUS) #libft/libft.a
-	cc $(OBJ_BONUS) $(FSAN) -g3 -o $(NAME)_bonus #-L ./libft -lft
-
-create_obj_folder :
-	@mkdir -p obj
-	@mkdir -p bonus
+create_build_folder :
+	@mkdir -p build
 
 clean:
-	rm -f $(OBJ)
-	rm -f $(OBJ_BONUS)
+	rm -f $(BUILD)
 	@if [ -d "./obj" ]; then\
 		rm -r obj;\
 	fi
-	make clean -C libft
 
 fclean: clean
-#	make fclean -C libft
 	rm -f $(NAME)
-	rm -f $(NAME)_bonus
 
 re:
 	make fclean
@@ -63,10 +49,5 @@ re:
 end_message:
 	@echo "Done !"
 
-bonus:
-	@make create_obj_folder
-#	make -C libft
-	make $(NAME)_bonus
-	@make end_message
 
-.PHONY: all clean fclean re create_obj_folder end_message bonus
+.PHONY: all clean fclean re create_build_folder end_message
