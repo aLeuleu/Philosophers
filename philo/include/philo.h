@@ -20,6 +20,7 @@ struct	s_philo
 	int time_to_eat ;
 	int time_to_sleep ;
 	int number_of_times_each_philosopher_must_eat ;
+	
 } typedef t_philo;
 
 #endif // PHILO_H
