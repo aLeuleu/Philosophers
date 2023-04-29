@@ -15,6 +15,15 @@
 # define VALID_ARGS 1
 # define INVALID_ARGS -1
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <sys/time.h>
+#include "sys/errno.h"
+#include <limits.h>
+
 struct	s_philo
 {
 	int number_of_philosophers ;
@@ -25,6 +34,7 @@ struct	s_philo
 	
 } typedef t_philo;
 
-int	check_args(int argc, char **argv);
+int			check_args(int argc, char **argv);
+long long	ft_atoll(const char *str);
 
 #endif // PHILO_H
