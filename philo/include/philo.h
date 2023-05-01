@@ -29,17 +29,18 @@
 #define NUMBER_OF_PHILOSOPHERS ft_atoll(argv[1])
 
 //common parameters for all philosophers
-struct	s_params
+struct	s_philos_params
 {
 	int 			nb_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				meals_to_eat;
+	int				nb_of_meals_to_eat;
 	bool			a_philo_died;
-	pthread_mutex_t	sync_start_mutex;
+	pthread_mutex_t	a_philo_died_mutex;
+	pthread_mutex_t	start_simulation_mutex;
 	pthread_mutex_t	print_mutex;
-} typedef	t_params;
+} typedef	t_philos_params;
 
 struct	s_philo
 {
@@ -53,6 +54,8 @@ struct	s_philo
 
 
 void check_args(int argc, char **argv, int *error);
-void set_global_params_from_args(char **argv, t_params *params, int *error);
+void set_philos_params_from_args(char **argv, t_philos_params *params, int *error);
+void create_all_philosophers(t_philo **philos, t_philos_params params, int *error);
+void init_all_philosophers(t_philo *philos, t_philos_params params, int *error);
 
 #endif // PHILO_H

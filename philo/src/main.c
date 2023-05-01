@@ -10,84 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <tclDecls.h>
 #include "philo.h"
 
-void create_all_philosophers(t_philo **philos, t_params params, int *error);
-
-void init_all_philosophers(t_philo *philos, t_params params, int *error);
-
-void init_one_philo(t_philo *philo, int id, int *error);
-
-void set_all_left_forks(t_philo *philos, t_params params, int *error);
-
-void create_right_fork_for_this_philo(t_philo *philo, int *error);
+void create_monitor_thread_and_start_simulation(pthread_t *monitor, t_philo *philosophers);
 
 int	main(int argc, char **argv)
 {
-	t_params		params;
-	t_philo			*philos;
-	int 			error;
+	t_philos_params		params;
+	t_philo				*philos;
+	int 				error;
+	pthread_t 			monitor;
 
 	error = 0;
 	check_args(argc, argv, &error);
-	set_global_params_from_args(argv, &params, &error);
+	set_philos_params_from_args(argv, &params, &error);
 	create_all_philosophers(&philos, params, &error);
 	init_all_philosophers(philos, params, &error);
-//	create_monitor();
-//	run_philosophers_and_monitor(philos);
+	create_all_philosophers_threads(philos); //will create threads for all philos ! Philos will wait for the "start simulation mutex" to be unlocked
+	create_monitor_thread_and_start_simulation(&monitor, philos);
+
 //	clean_up(philos);
-//	return(errno);
-	return (0);
+	return(error);
 }
 
+static void *monitor_routine(void *philos_casted_to_void);
 
-void create_all_philosophers(t_philo **philos, t_params params, int *error)
+void create_monitor_thread_and_start_simulation(pthread_t *monitor, t_philo *philosophers)
 {
-	if (*error)
-		return ;
-	*philos = malloc(sizeof(t_philo) * (params.nb_philos));
-	if(!*philos)
-	{
-		*error = MALLOC_ERROR;
-		error_msg(*error);
-	}
+	pthread_create(monitor, NULL, &monitor_routine, philosophers);
 }
 
-void init_all_philosophers(t_philo *philos, t_params params, int *error)
+//this will start the simulation by unlocking the "start simulation mutex"
+static void *monitor_routine(void *philos_casted_to_void)
 {
-	int	i;
+	const t_philo	*philos = (t_philo *)philos_casted_to_void;
 
-	if (*error)
-		return ;
-	i = -1;
-	while (++i < params.nb_philos && !*error)
-		init_one_philo(&philos[i], i, error);
-	set_all_left_forks(philos, params, error);
+	usleep(40);
+//	while (true)
+//		if (check_if_a_philo_died(philosophers_void))
+//			return (NULL);
 }
-
-void set_all_left_forks(t_philo *philos, t_params params, int *error)
-{
-	int	i;
-
-	if (*error)
-		return ;
-	philos[0].left_fork_mutex = &philos[params.nb_philos].right_fork_mutex;
-	i = 0;
-	while (++i < params.nb_philos && !*error)
-		philos[i].left_fork_mutex = &philos[i - 1].right_fork_mutex;
-}
-
-void init_one_philo(t_philo *philo, int id, int *error)
-{
-	philo->id = id;
-	philo->nb_meals_eaten = 0;
-	create_right_fork_for_this_philo(philo, error);
-}
-
-void create_right_fork_for_this_philo(t_philo *philo, int *error)
-{
-	*error = pthread_mutex_init(&philo->right_fork_mutex, NULL);
-	if (*error != 0)
-		return (error_msg(MUTEX_INIT_ERROR));
-}
-
