@@ -10,12 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "common_tools.h"
 
-static long long	handle_overflow(bool is_negative, long long tmp_number,
-									char next_char);
 static int			ft_isspace(char c);
-static int			ft_isdigit(char c);
 
 long long	ft_atoll(const char *str)
 {
@@ -29,41 +26,21 @@ long long	ft_atoll(const char *str)
 	if (*str == '+' || *str == '-')
 		str++;
 	if (*str < '0' || *str > '9')
-		errno = EINVAL;
+		return (-1);
 	result = 0;
 	while (*str >= '0' && *str <= '9')
 	{
 		tmp = result * 10 + *str++ - '0';
 		if (tmp < result)
-			return (handle_overflow(is_negative, tmp, *str));
+			return (-1);
 		result = tmp;
 	}
-	if (*str != '\0')
-		errno = EINVAL;
-	if (is_negative)
-		return (-result);
+	if (*str != '\0' || is_negative)
+		return (-1);
 	return (result);
-}
-
-static long long	handle_overflow(bool is_negative, long long tmp_number,
-									char next_char)
-{
-	if (is_negative)
-	{
-		if (tmp_number != LLONG_MIN || ft_isdigit(next_char))
-			errno = ERANGE;
-		return (LLONG_MIN);
-	}
-	errno = ERANGE;
-	return (LLONG_MAX);
 }
 
 static int ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t');
-}
-
-static int ft_isdigit(char c)
-{
-	return (c >= '0' && c <= '9');
 }

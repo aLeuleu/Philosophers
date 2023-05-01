@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,39 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "check_args.h"
+#include "common_tools.h"
 
-static int	valid_args_count(int argc);
-static int	values_are_in_acceptable_limits(char **argv);
-
-//check that there is 5 or 6 args,
-//and that there values are in acceptable limits ([1-INT_MAX])
-void check_args(int argc, char **argv, int *error)
+//display error message depending on the error code
+void error_msg(int code)
 {
-	if (!valid_args_count(argc) || !values_are_in_acceptable_limits(argv))
-	{
-		*error = INVALID_ARGS;
-		error_msg(*error);
-	}
-}
-
-static int	valid_args_count(int argc)
-{
-	if (argc != 5 && argc != 6)
-		return(false);
-	return (true);
-}
-
-static int	values_are_in_acceptable_limits(char **argv)
-{
-	long long	tmp;
-
-
-	while (*(++argv))
-	{
-		tmp = ft_atoll(*argv);
-		if (tmp > INT_MAX || tmp < 1)
-			return(false);
-	}
-	return (true);
+	printf("Error : \n");
+	if (code == INVALID_ARGS)
+		printf("invalid arguments.\n");
+	if (code == MALLOC_ERROR)
+		printf("memory allocation failure.\n");
 }

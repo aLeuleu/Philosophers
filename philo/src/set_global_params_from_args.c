@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   set_global_params_from_args                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,39 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "check_args.h"
+#include "philo.h"
 
-static int	valid_args_count(int argc);
-static int	values_are_in_acceptable_limits(char **argv);
-
-//check that there is 5 or 6 args,
-//and that there values are in acceptable limits ([1-INT_MAX])
-void check_args(int argc, char **argv, int *error)
+void set_global_params_from_args(char **argv, t_params *params, int *error)
 {
-	if (!valid_args_count(argc) || !values_are_in_acceptable_limits(argv))
-	{
-		*error = INVALID_ARGS;
-		error_msg(*error);
-	}
-}
+	if (*error)
+		return ;
+	params->nb_philos = (int)ft_atoll(argv[1]);
+	params->time_to_die = (int)ft_atoll(argv[2]);
+	params->time_to_eat = (int)ft_atoll(argv[3]);
+	params->time_to_sleep = (int)ft_atoll(argv[4]);
+	if (argv[5])
+		params->meals_to_eat = (int)ft_atoll(argv[5]);
+	params->a_philo_died = false;
 
-static int	valid_args_count(int argc)
-{
-	if (argc != 5 && argc != 6)
-		return(false);
-	return (true);
-}
-
-static int	values_are_in_acceptable_limits(char **argv)
-{
-	long long	tmp;
-
-
-	while (*(++argv))
-	{
-		tmp = ft_atoll(*argv);
-		if (tmp > INT_MAX || tmp < 1)
-			return(false);
-	}
-	return (true);
 }
