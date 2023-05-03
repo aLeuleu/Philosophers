@@ -18,7 +18,7 @@ add_executable(
         src/init_all_philosophers.c
         src/common_tools/error_msg.c
         src/common_tools/ft_atoll.c
-        )
+        src/create_monitor_thread_and_start_simulation.c src/create_and_start_all_philosophers_threads.c include/philo_time.h src/common_tools/philo_time.c)
 
 #target_link_libraries(minishell ~/minishell/libft/libft.a)
 #target_link_libraries(minishell readline)

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_msg.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common_tools.h"
+#include "philo.h"
 
-//display error message depending on the error code
-void error_msg(int code)
+static void *monitor_routine(void *philos_casted_to_void);
+
+void create_monitor_thread_and_start_simulation(pthread_t *monitor, t_philo *philosophers)
 {
-	printf("Error : \n");
-	if (code == INVALID_ARGS)
-		printf("invalid arguments.\n");
-	if (code == MALLOC_ERROR)
-		printf("memory allocation failure.\n");
-	if (code == MUTEX_INIT_ERROR)
-		printf("mutex initialisation failure.\n");
+	pthread_create(monitor, NULL, &monitor_routine, philosophers);
+}
+
+//this will start the simulation by unlocking the "start simulation mutex"
+static void *monitor_routine(void *philos_casted_to_void)
+{
+	const t_philo	*philos = (t_philo *)philos_casted_to_void;
+
+	usleep(40);
+	//set params->start_time= get_current_time();
+//	while (true)
+//		if (check_if_a_philo_died(philosophers_void))
+//			return (NULL);
 }
