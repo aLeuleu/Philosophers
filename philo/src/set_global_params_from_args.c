@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_philos_params_from_args                        :+:      :+:    :+:   */
+/*   set_global_params_from_args.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:12:12 by alevra            #+#    #+#             */
-/*   Updated: 2023/02/24 16:45:28 by alevra           ###   ########.fr       */
+/*   Updated: 2023/05/03 15:10:50 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 //this will parse argv to fill philos params
 //create the "a_philo_died" mutex
 //create the "start_simulation" mutex and lock to prevent philos from beginning
-void set_philos_params_from_args(char **argv, t_philos_params *params, int *error)
+void	set_philos_params_from_args(char **argv, t_philos_params *params,
+		int *error)
 {
 	if (*error)
 		return ;

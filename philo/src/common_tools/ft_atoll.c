@@ -6,13 +6,13 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:12:12 by alevra            #+#    #+#             */
-/*   Updated: 2023/02/24 16:45:28 by alevra           ###   ########.fr       */
+/*   Updated: 2023/05/03 15:08:52 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common_tools.h"
 
-static int			ft_isspace(char c);
+static int	ft_isspace(char c);
 
 long long	ft_atoll(const char *str)
 {
@@ -40,7 +40,7 @@ long long	ft_atoll(const char *str)
 	return (result);
 }
 
-static int ft_isspace(char c)
+static int	ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t');
 }

@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:15:30 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/02 09:15:30 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 15:18:35 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 struct timeval	get_current_time(void);
 long long		get_timestamp(const t_philos_params *params,
-							   const struct timeval current_time);
+					const struct timeval current_time);
 void			timeval_add_ms(struct timeval *tv, const int n);
 int				timeval_compare(const struct timeval t1,
-								   const struct timeval t2);
+					const struct timeval t2);
 
 #endif //PHILO_TIME_H

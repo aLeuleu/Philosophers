@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 07:14:46 by alevra            #+#    #+#             */
-/*   Updated: 2023/03/16 07:14:49 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 15:09:00 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,26 @@ struct timeval	get_current_time(void)
 	if (current_time.tv_usec >= NB_OF_USECONDS_IN_A_SECOND)
 	{
 		current_time.tv_sec += current_time.tv_usec
-							   / NB_OF_USECONDS_IN_A_SECOND;
+			/ NB_OF_USECONDS_IN_A_SECOND;
 		current_time.tv_usec %= NB_OF_USECONDS_IN_A_SECOND;
 	}
 	return (current_time);
 }
 
 long long	get_timestamp(const t_philos_params *params,
-						   const struct timeval current_time)
+						const struct timeval current_time)
 {
 	return ((current_time.tv_sec - params->start_time.tv_sec)
-			* (long long)NB_OF_USECONDS_IN_A_MILLISECOND
-			+ (current_time.tv_usec - params->start_time.tv_usec)
-			  / NB_OF_USECONDS_IN_A_MILLISECOND);
+		* (long long)NB_OF_USECONDS_IN_A_MILLISECOND + (current_time.tv_usec
+			- params->start_time.tv_usec) / NB_OF_USECONDS_IN_A_MILLISECOND);
 }
 
 void	timeval_add_ms(struct timeval *tv, const int number_of_ms_to_add)
 {
-	const unsigned long long	new_tv_usec = tv->tv_usec + (number_of_ms_to_add
-															 * (long long)NB_OF_USECONDS_IN_A_MILLISECOND);
+	const unsigned long long	new_tv_usec;
 
+	new_tv_usec = tv->tv_usec + (number_of_ms_to_add
+			* (long long)NB_OF_USECONDS_IN_A_MILLISECOND);
 	if (new_tv_usec >= NB_OF_USECONDS_IN_A_SECOND)
 	{
 		tv->tv_sec += new_tv_usec / NB_OF_USECONDS_IN_A_SECOND;
