@@ -12,9 +12,11 @@
 
 #ifndef COMMON_TOOLS_H
 # define COMMON_TOOLS_H
+
 # include "philo.h"
 
 void		error_msg(int code);
 long long	ft_atoll(const char *str);
-
+bool		all_philos_are_alive(t_philos_params *params);
+int			print_state_change(const char *format, t_philo *philosopher, t_philos_params *params);
 #endif

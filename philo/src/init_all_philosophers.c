@@ -23,17 +23,18 @@ static void	create_right_fork_for_this_philo(t_philo *philo, int *error);
 // - set nb_meals_eaten to 0
 // - create a right fork
 // - set the left fork pointer to the previous philo's right fork
-void	init_all_philosophers(t_philo *philos, t_philos_params *params,
-		int *error)
+void	init_all_philosophers(t_philo **philos, t_philos_params *params,
+							  int *error)
 {
 	int	i;
 
+	create_all_philosophers(philos, params, error);
 	if (*error)
 		return ;
 	i = -1;
 	while (++i < params->nb_philos && !*error)
-		init_one_philo(&philos[i], i, params, error);
-	set_all_left_forks(philos, params, error);
+		init_one_philo(philos[i], i, params, error);
+	set_all_left_forks(*philos, params, error);
 }
 
 static void	set_all_left_forks(t_philo *philos, t_philos_params *params,

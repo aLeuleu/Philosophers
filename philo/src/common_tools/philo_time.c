@@ -59,3 +59,16 @@ int	timeval_compare(const struct timeval t1, const struct timeval t2)
 		return (-1);
 	return (t1.tv_usec > t2.tv_usec);
 }
+
+void	sleep_till(const struct timeval goal, const t_philo *philo)
+{
+	struct timeval	current_time;
+
+	current_time = get_current_time();
+	while (timeval_compare(goal, current_time) > 0
+		   && all_philos_are_alive(philo->params))
+	{
+		usleep(5);
+		current_time = get_current_time();
+	}
+}

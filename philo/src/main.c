@@ -12,11 +12,10 @@
 
 #include "philo.h"
 
-void	create_monitor_thread_and_start_simulation(pthread_t *monitor,
-			t_philo *philosophers);
-void	create_and_start_all_philosophers_threads(t_philo *philos,
-			t_philos_params params, int *error);
-void	*philosopher_routine(void *philosopher_casted_to_void);
+static void create_monitor_thread_and_start_simulation(pthread_t *monitor,\
+t_philo *philosophers, int *error);
+
+void	*philosopher_thread(void *philosopher_casted_to_void);
 
 int	main(int argc, char **argv)
 {
@@ -27,11 +26,20 @@ int	main(int argc, char **argv)
 
 	error = 0;
 	check_args(argc, argv, &error);
-	set_philos_params_from_args(argv, &params, &error);
-	create_all_philosophers(&philos, params, &error);
-	init_all_philosophers(philos, &params, &error);
-	create_and_start_all_philosophers_threads(philos, params, &error);
-	create_monitor_thread_and_start_simulation(&monitor, philos);
+	set_params_from_args(argv, &params, &error);
+	init_all_philosophers(&philos, &params, &error);
+	start_all_philosophers_threads(philos, &params, &error);
+	create_monitor_thread_and_start_simulation(&monitor, philos, &error);
 	//	clean_up(philos);
 	return (error);
+}
+
+static void create_monitor_thread_and_start_simulation(pthread_t *monitor, t_philo *philosophers, int *error)
+{
+	if (pthread_create(monitor, NULL, &monitor_routine, philosophers) != 0)
+	{
+		*error = THREAD_CREATION_ERROR;
+		error_msg(*error);
+		return ;
+	}
 }

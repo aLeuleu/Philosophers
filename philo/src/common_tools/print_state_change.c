@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_all_philosophers.c                          :+:      :+:    :+:   */
+/*   print_state_change.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/24 16:12:12 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/03 15:20:36 by alevra           ###   ########lyon.fr   */
+/*   Created: 2023/03/16 07:15:08 by alevra            #+#    #+#             */
+/*   Updated: 2023/04/05 19:38:05 by alevra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "common_tools.h"
 
-//basic heap allocation
-void	create_all_philosophers(t_philo **philos, t_philos_params *params,
-								int *error)
+int print_state_change(const char *format, t_philo *philosopher, t_philos_params *params)
 {
-	if (*error)
-		return ;
-	*philos = malloc(sizeof(t_philo) * (params->nb_philos));
-	if (!*philos)
+	pthread_mutex_lock(&params->a_philo_died_mutex);
+	if (params->a_philo_died)
 	{
-		*error = MALLOC_ERROR;
-		error_msg(*error);
+		pthread_mutex_unlock(&params->a_philo_died_mutex);
+		return (-1);
 	}
+	printf(format, get_timestamp(params, get_current_time()),
+		philosopher->id);
+	pthread_mutex_unlock(&params->a_philo_died_mutex);
+	return (0);
 }

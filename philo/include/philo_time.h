@@ -14,7 +14,7 @@
 # define PHILO_TIME_H
 
 # include <sys/time.h>
-# include "philo.h"
+#include "philo.h"
 
 # define NB_OF_USECONDS_IN_A_SECOND 1000000
 # define NB_OF_USECONDS_IN_A_MILLISECOND 1000
@@ -25,5 +25,6 @@ long long		get_timestamp(const t_philos_params *params,
 void			timeval_add_ms(struct timeval *tv, const int n);
 int				timeval_compare(const struct timeval t1,
 					const struct timeval t2);
+void			sleep_till(const struct timeval goal, const t_philo *philo);
 
 #endif //PHILO_TIME_H

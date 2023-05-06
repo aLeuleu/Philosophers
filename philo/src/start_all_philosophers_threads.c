@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_monitor_thread_and_start_simulation.        :+:      :+:    :+:   */
+/*   start_all_philosophers_threads.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:12:12 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/03 15:09:57 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 15:09:45 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*monitor_routine(void *philos_casted_to_void);
-
-void	create_monitor_thread_and_start_simulation(pthread_t *monitor,
-		t_philo *philosophers)
+// Philos will wait for the "start simulation mutex" to be unlocked.
+// If there is a thread creation failure,
+// all threads that have already been created will be terminated.
+void	start_all_philosophers_threads(t_philo *philos,
+									   t_philos_params *params,
+									   int *error)
 {
-	pthread_create(monitor, NULL, &monitor_routine, philosophers);
-}
+	int	i;
 
-//this will start the simulation by unlocking the "start simulation mutex"
-static void	*monitor_routine(void *philos_casted_to_void)
-{
-	const t_philo *philos = (t_philo *)philos_casted_to_void;
-
-	usleep(40);
-	//set params->start_time= get_current_time();
-	//	while (true)
-	//		if (check_if_a_philo_died(philosophers_void))
-	//			return (NULL);
+	if (*error)
+		return ;
+	i = -1;
+	while (++i < params->nb_philos)
+	{
+		if (pthread_create(&philos[i].pthread, NULL, &philosopher_thread,
+				&philos[i]) != 0)
+		{
+			*error = THREAD_CREATION_ERROR;
+			error_msg(*error);
+			break ;
+		}
+	}
+//	if (*error)
+	//error handler here
 }
