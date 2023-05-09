@@ -33,7 +33,7 @@ void	init_all_philosophers(t_philo **philos, t_philos_params *params,
 		return ;
 	i = -1;
 	while (++i < params->nb_philos && !*error)
-		init_one_philo(philos[i], i, params, error);
+		init_one_philo(&(*philos)[i], i, params, error);
 	set_all_left_forks(*philos, params, error);
 }
 

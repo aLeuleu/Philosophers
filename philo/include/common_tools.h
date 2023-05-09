@@ -14,6 +14,7 @@
 # define COMMON_TOOLS_H
 
 # include "philo.h"
+# include <stdbool.h>
 
 void		error_msg(int code);
 long long	ft_atoll(const char *str);

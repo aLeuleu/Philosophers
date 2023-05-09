@@ -36,7 +36,7 @@ long long	get_timestamp(const t_philos_params *params,
 
 void	timeval_add_ms(struct timeval *tv, const int number_of_ms_to_add)
 {
-	const unsigned long long	new_tv_usec;
+	unsigned long long	new_tv_usec;
 
 	new_tv_usec = tv->tv_usec + (number_of_ms_to_add
 			* (long long)NB_OF_USECONDS_IN_A_MILLISECOND);

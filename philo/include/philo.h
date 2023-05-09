@@ -17,9 +17,6 @@
 # define MUTEX_INIT_ERROR -3
 # define THREAD_CREATION_ERROR -4
 # define INFINITE_EAT -1
-# include "common_tools.h"
-# include "philo_time.h"
-# include "philo_tools.h"
 # include <limits.h>
 # include <pthread.h>
 # include <stdbool.h>
@@ -70,4 +67,7 @@ void	create_all_philosophers(t_philo **philos, t_philos_params *params,
 								int *error);
 void	*philosopher_thread(void *philosopher_casted_to_void);
 
+# include "common_tools.h"
+# include "philo_time.h"
+# include "philo_tools.h"
 #endif // PHILO_H

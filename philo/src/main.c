@@ -24,13 +24,16 @@ int	main(int argc, char **argv)
 	int				error;
 	pthread_t		monitor;
 
+	pthread_mutex_init(&params.start_simulation_mutex, NULL);
+	pthread_mutex_lock(&params.start_simulation_mutex);
+
 	error = 0;
 	check_args(argc, argv, &error);
 	set_params_from_args(argv, &params, &error);
 	init_all_philosophers(&philos, &params, &error);
 	start_all_philosophers_threads(philos, &params, &error);
 	create_monitor_thread_and_start_simulation(&monitor, philos, &error);
-	//	clean_up(philos);
+	//clean_up(philos);
 	return (error);
 }
 
@@ -42,4 +45,5 @@ static void create_monitor_thread_and_start_simulation(pthread_t *monitor, t_phi
 		error_msg(*error);
 		return ;
 	}
+	pthread_join(*monitor, NULL);
 }
