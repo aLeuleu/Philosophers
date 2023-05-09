@@ -23,6 +23,7 @@ void	*philosopher_thread(void *philosopher_casted_to_void)
 			break ;
 		usleep(100);
 	}
+	return (NULL);
 }
 
 static void init_philosopher_thread(t_philo *philo, t_philos_params *params)
