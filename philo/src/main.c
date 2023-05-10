@@ -56,6 +56,9 @@ static void	clean_up(t_philo *philos)
 
 	size = philos->params->nb_philos;
 	while (size--)
+		pthread_join(philos[size].pthread, NULL);
+	size = philos->params->nb_philos;
+	while (size--)
 		destroy_this_philo_fork(philos + size);
 	free(philos);
 }
