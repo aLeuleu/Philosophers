@@ -3,7 +3,7 @@ project(philo)
 
 set(CMAKE_C_STANDARD 99)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -fsanitize=address")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -fsanitize=thread")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -27,7 +27,8 @@ add_executable(
         src/philosophers_tools/philosopher_eats.c
         src/philosophers_tools/philosopher_sleeps.c
         src/monitor/monitor_thread.c
-        src/philosophers/philosopher_thread.c)
+        src/philosophers/philosopher_thread.c
+)
 
 #target_link_libraries(minishell~/minishell/libft/libft.a)
 #target_link_libraries(minishell readline)

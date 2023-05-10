@@ -35,13 +35,14 @@ SRC =	main.c \
 
 BONUS_FLAG = #-DBONUS_FLAG
 FLAGS = -Wall -Wextra -Werror
-FSAN = -fsanitize=address
+FSAN = -fsanitize=thread
 OBJ = $(addprefix obj/,$(SRC:.c=.o))
 OBJ_BONUS = $(addprefix bonus/,$(SRC:.c=.o))
 INCLUDE_LIBFT = #-I libft
 LINK_LIBFT = #-L ./libft -lft
 LIBFT = #libft/libft.a
-INCLUDE_HEADERS = -I include $(addprefix -I ,$(HEADERS))
+INCLUDE_HEADERS = -I include
+
 
 
 
