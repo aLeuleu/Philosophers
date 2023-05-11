@@ -33,13 +33,15 @@ static bool	check_if_a_philo_died(t_philo *philo)
 					philo[i].id);
 			return (true);
 		}
-		pthread_mutex_lock(&philo[i].nb_meals_eaten_mutex);
-		philo_has_finished += philo[i].nb_meals_eaten >= philo->params->nb_of_meals_to_eat;
-		pthread_mutex_unlock(&philo[i].nb_meals_eaten_mutex);
+		if (philo->params->nb_of_meals_to_eat > 0)
+		{
+			pthread_mutex_lock(&philo[i].nb_meals_eaten_mutex);
+			philo_has_finished += philo[i].nb_meals_eaten >= philo->params->nb_of_meals_to_eat;
+			pthread_mutex_unlock(&philo[i].nb_meals_eaten_mutex);
+		}
 	}
 	if (philo_has_finished == philo->params->nb_philos)
 	{
-		printf("finish\n") ;//debug
 		stop_philosophers(philo->params);
 		return (true);
 	}
