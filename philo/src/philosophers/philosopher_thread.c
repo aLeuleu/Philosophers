@@ -30,16 +30,16 @@ static void init_philosopher_thread(t_philo *philo, t_philos_params *params)
 {
 	struct timeval tmp;
 
-//	printf("%i is waiting for the sim mutex ..\n", philo->id);
-	pthread_mutex_lock(&params->start_simulation_mutex);
-	pthread_mutex_unlock(&params->start_simulation_mutex);
+	pthread_mutex_lock(&philo->params->simulation_start_mutex);
+	pthread_mutex_unlock(&philo->params->simulation_start_mutex);
+	philo->start_time = get_current_time();
 	pthread_mutex_lock(&philo->predicted_death_time_mutex);
-	philo->predicted_death_time = params->start_time;
+	philo->predicted_death_time = philo->start_time;
 	timeval_add_ms(&philo->predicted_death_time, params->time_to_die);
 	pthread_mutex_unlock(&philo->predicted_death_time_mutex);
 	if (philo->id % 2)
 	{
-		tmp = params->start_time;
+		tmp = philo->start_time;
 		timeval_add_ms(&tmp, 50);
 		if (print_state_change("%lli\t%i is thinking\n", philo, params) < 0)
 			return ;

@@ -20,7 +20,7 @@ int print_state_change(const char *format, t_philo *philosopher, t_philos_params
 		pthread_mutex_unlock(&params->a_philo_died_mutex);
 		return (-1);
 	}
-	printf(format, get_timestamp(params, get_current_time()),
+	printf(format, get_timestamp(philosopher, get_current_time()),
 		philosopher->id + 1);
 	pthread_mutex_unlock(&params->a_philo_died_mutex);
 	return (0);

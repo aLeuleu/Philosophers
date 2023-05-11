@@ -29,11 +29,12 @@ void	set_params_from_args(char **argv, t_philos_params *params,
 	params->a_philo_died = false;
 	*error = pthread_mutex_init(&params->a_philo_died_mutex, NULL);
 	if (!*error)
-		*error = pthread_mutex_init(&params->start_simulation_mutex, NULL);
+		*error = pthread_mutex_init(&params->simulation_start_mutex, NULL);
 	if (*error)
 	{
 		*error = MUTEX_INIT_ERROR;
 		return (error_msg(*error));
 	}
-	pthread_mutex_lock(&params->start_simulation_mutex);
+	pthread_mutex_init(&params->simulation_start_mutex, NULL);
+	pthread_mutex_lock(&params->simulation_start_mutex);
 }

@@ -34,16 +34,15 @@ typedef struct s_philos_params
 	int				time_to_sleep;
 	int				nb_of_meals_to_eat;
 	bool			a_philo_died;
-	struct timeval	start_time;
 	pthread_mutex_t	a_philo_died_mutex;
-	pthread_mutex_t	start_simulation_mutex;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	simulation_start_mutex;
 }					t_philos_params;
 
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		pthread;
+	struct timeval	start_time;
 	int				nb_meals_eaten;
 	pthread_mutex_t	nb_meals_eaten_mutex;
 	struct timeval	predicted_death_time;

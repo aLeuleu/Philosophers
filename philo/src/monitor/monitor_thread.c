@@ -10,14 +10,10 @@ void	*monitor_routine(void *philos_casted_to_void)
 	t_philo *philos;
 
 	philos = (t_philo *)philos_casted_to_void;
-	usleep(500);
-	philos->params->start_time = get_current_time();
-	printf("monitor : starting ..\n");
-	pthread_mutex_unlock(&philos->params->start_simulation_mutex);
-	usleep(500);
-		while (true)
-			if (check_if_a_philo_died(philos))
-				return (NULL);
+	usleep(50);
+	while (true)
+		if (check_if_a_philo_died(philos))
+			return (NULL);
 }
 
 static bool	check_if_a_philo_died(t_philo *philo)
@@ -29,13 +25,11 @@ static bool	check_if_a_philo_died(t_philo *philo)
 	i = philo->params->nb_philos;
 	while (i--)
 	{
-//		printf("%i ...\n", i);
 		if (is_philosopher_dead(philo + i))
 		{
-//			printf("stop1\n") ;//debug
 			stop_philosophers(philo->params);
 			printf("%lli\t%i died\n",
-					get_timestamp(philo->params, get_current_time()),
+					get_timestamp(philo, get_current_time()),
 					philo[i].id);
 			return (true);
 		}
@@ -45,7 +39,7 @@ static bool	check_if_a_philo_died(t_philo *philo)
 	}
 	if (philo_has_finished == philo->params->nb_philos)
 	{
-		printf("stop2\n") ;//debug
+		printf("finish\n") ;//debug
 		stop_philosophers(philo->params);
 		return (true);
 	}

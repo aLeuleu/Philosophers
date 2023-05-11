@@ -26,12 +26,12 @@ struct timeval	get_current_time(void)
 	return (current_time);
 }
 
-long long	get_timestamp(const t_philos_params *params,
-						const struct timeval current_time)
+long long	get_timestamp(const t_philo *philo,
+						   const struct timeval current_time)
 {
-	return ((current_time.tv_sec - params->start_time.tv_sec)
+	return ((current_time.tv_sec - philo->start_time.tv_sec)
 		* (long long)NB_OF_USECONDS_IN_A_MILLISECOND + (current_time.tv_usec
-			- params->start_time.tv_usec) / NB_OF_USECONDS_IN_A_MILLISECOND);
+			- philo->start_time.tv_usec) / NB_OF_USECONDS_IN_A_MILLISECOND);
 }
 
 void	timeval_add_ms(struct timeval *tv, const int number_of_ms_to_add)
