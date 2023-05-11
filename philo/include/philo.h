@@ -28,6 +28,7 @@
 //common parameters for all philosophers
 typedef struct s_philos_params
 {
+	struct timeval	start_time;
 	int				nb_philos;
 	int				time_to_die;
 	int				time_to_eat;
@@ -36,13 +37,14 @@ typedef struct s_philos_params
 	bool			a_philo_died;
 	pthread_mutex_t	a_philo_died_mutex;
 	pthread_mutex_t	simulation_start_mutex;
+	pthread_mutex_t	print_mutex;
 }					t_philos_params;
 
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		pthread;
-	struct timeval	start_time;
+	bool			has_started;
 	int				nb_meals_eaten;
 	pthread_mutex_t	nb_meals_eaten_mutex;
 	struct timeval	predicted_death_time;

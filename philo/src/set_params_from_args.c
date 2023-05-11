@@ -27,14 +27,8 @@ void	set_params_from_args(char **argv, t_philos_params *params,
 	if (argv[5])
 		params->nb_of_meals_to_eat = (int)ft_atoll(argv[5]);
 	params->a_philo_died = false;
-	*error = pthread_mutex_init(&params->a_philo_died_mutex, NULL);
-	if (!*error)
-		*error = pthread_mutex_init(&params->simulation_start_mutex, NULL);
-	if (*error)
-	{
-		*error = MUTEX_INIT_ERROR;
-		return (error_msg(*error));
-	}
+	pthread_mutex_init(&params->a_philo_died_mutex, NULL);
+	pthread_mutex_init(&params->print_mutex, NULL);
 	pthread_mutex_init(&params->simulation_start_mutex, NULL);
 	pthread_mutex_lock(&params->simulation_start_mutex);
 }

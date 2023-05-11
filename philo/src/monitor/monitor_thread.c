@@ -10,7 +10,7 @@ void	*monitor_routine(void *philos_casted_to_void)
 	t_philo *philos;
 
 	philos = (t_philo *)philos_casted_to_void;
-	usleep(50);
+	philos->params->start_time = get_current_time();
 	while (true)
 		if (check_if_a_philo_died(philos))
 			return (NULL);
@@ -45,7 +45,7 @@ static bool	check_if_a_philo_died(t_philo *philo)
 		stop_philosophers(philo->params);
 		return (true);
 	}
-	usleep(50);
+	usleep(1000);
 	return (false);
 }
 
@@ -54,10 +54,13 @@ static bool	is_philosopher_dead(t_philo *philo)
 	const struct timeval	current_time = get_current_time();
 	bool					return_value;
 
+	if (philo->has_started == false)
+		return (false);
 	pthread_mutex_lock(&philo->predicted_death_time_mutex);
-//	printf("*philo->predicted_death_time : %lli\n", get_timestamp(philo->params, philo->predicted_death_time));
 	return_value =
 			timeval_compare(philo->predicted_death_time, current_time) <= 0;
+	if (return_value)
+		printf("*philo->predicted_death_time : %lli\n", get_timestamp(philo, philo->predicted_death_time));
 	pthread_mutex_unlock(&philo->predicted_death_time_mutex);
 	return (return_value);
 }

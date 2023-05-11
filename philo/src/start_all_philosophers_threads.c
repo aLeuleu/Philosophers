@@ -34,6 +34,11 @@ void	start_all_philosophers_threads(t_philo *philos,
 			break ;
 		}
 	}
-//	if (*error)
-	//error handler here
+	if (i != params->nb_philos)
+	{
+		while (i--)
+			pthread_join(philos[i].pthread, NULL);
+		pthread_mutex_destroy(&params->simulation_start_mutex);
+		return ;
+	}
 }

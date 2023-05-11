@@ -56,6 +56,7 @@ static void	init_one_philo(t_philo *philo, int id, t_philos_params *params,
 	philo->id = id;
 	philo->nb_meals_eaten = 0;
 	philo->params = params;
+	philo->has_started = false;
 	create_right_fork_for_this_philo(philo, error);
 }
 
