@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:12:12 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/03 15:09:45 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:52:39 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 // If there is a thread creation failure,
 // all threads that have already been created will be terminated.
 void	start_all_philosophers_threads(t_philo *philos,
-									   t_philos_params *params,
-									   int *error)
+									t_philos_params *params, \
+									int *error)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:12:12 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/03 15:21:00 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:51:50 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	create_right_fork_for_this_philo(t_philo *philo, int *error);
 // - set nb_meals_eaten to 0
 // - create a right fork
 // - set the left fork pointer to the previous philo's right fork
-void	init_all_philosophers(t_philo **philos, t_philos_params *params,
-							  int *error)
+void	init_all_philosophers(t_philo **philos, t_philos_params *params, \
+		int *error)
 {
 	int	i;
 

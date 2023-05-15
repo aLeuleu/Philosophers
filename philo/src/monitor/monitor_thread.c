@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor_thread.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 07:15:08 by alevra            #+#    #+#             */
+/*   Updated: 2023/05/15 14:50:00 by alevra           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static bool	check_if_a_philo_died(t_philo *philo);
@@ -27,9 +39,9 @@ static bool	check_if_a_philo_died(t_philo *philo)
 		if (is_philosopher_dead(philo + i))
 		{
 			stop_philosophers(philo->params);
-			printf("%lli\t%i died\n",
-					get_timestamp(philo, get_current_time()),
-					philo[i].id);
+			printf("%lli\t%i died\n", \
+					get_timestamp(philo, get_current_time()), \
+				philo[i].id);
 			return (true);
 		}
 		if (philo->params->nb_of_meals_to_eat > 0)

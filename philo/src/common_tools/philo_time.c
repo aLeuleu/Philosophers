@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 07:14:46 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/03 15:09:00 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:48:20 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ struct timeval	get_current_time(void)
 }
 
 long long	get_timestamp(const t_philo *philo,
-						   const struct timeval current_time)
+							const struct timeval current_time)
 {
-	return (
-			(current_time.tv_sec - philo->params->start_time.tv_sec)
-		* (long long)NB_OF_USECONDS_IN_A_MILLISECOND + (current_time.tv_usec
-			- philo->params->start_time.tv_usec) / NB_OF_USECONDS_IN_A_MILLISECOND);
+	return ((current_time.tv_sec - philo->params->start_time.tv_sec)
+		* (long long)NB_OF_USECONDS_IN_A_MILLISECOND + (current_time.tv_usec \
+		- philo->params->start_time.tv_usec) / NB_OF_USECONDS_IN_A_MILLISECOND);
 }
 
 void	timeval_add_ms(struct timeval *tv, const int number_of_ms_to_add)
@@ -67,7 +66,7 @@ void	sleep_till(const struct timeval goal, const t_philo *philo)
 
 	current_time = get_current_time();
 	while (timeval_compare(goal, current_time) > 0
-		   && all_philos_are_alive(philo->params))
+		&& all_philos_are_alive(philo->params))
 	{
 		usleep(500);
 		current_time = get_current_time();

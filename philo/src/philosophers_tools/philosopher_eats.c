@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 07:15:16 by alevra            #+#    #+#             */
-/*   Updated: 2023/04/10 18:38:27 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:51:08 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static int	take_forks(t_philo *philo)
 static int	take_fork(t_philo *philo, pthread_mutex_t *fork_mutex)
 {
 	pthread_mutex_lock(fork_mutex);
-	if (print_state_change("%lli\t%i has taken a fork\n",
-							   philo, philo->params) < 0)
+	if (print_state_change("%lli\t%i has taken a fork\n", \
+			philo, philo->params) < 0)
 	{
 		pthread_mutex_unlock(fork_mutex);
 		return (-1);

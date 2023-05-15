@@ -6,7 +6,7 @@
 /*   By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:34:13 by alevra            #+#    #+#             */
-/*   Updated: 2023/05/03 15:18:08 by alevra           ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:55:29 by alevra           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@ typedef struct s_philo
 }	t_philo;
 
 void	check_args(int argc, char **argv, int *error);
-void	set_params_from_args(char **argv,
-							 t_philos_params *params,
-							 int *error);
-void	init_all_philosophers(t_philo **philos,
-							  t_philos_params *params,
-							  int *error);
+void	set_params_from_args(char **argv, \
+t_philos_params *params, \
+int *error);
+void	init_all_philosophers(t_philo **philos, \
+t_philos_params *params, \
+int *error);
 void	*monitor_thread(void *philos_casted_to_void);
-void	start_all_philosophers_threads(t_philo *philos,
-									   t_philos_params *params, int *error);
-void	create_all_philosophers(t_philo **philos, t_philos_params *params,
-								int *error);
+void	start_all_philosophers_threads(t_philo *philos, \
+t_philos_params *params, int *error);
+void	create_all_philosophers(t_philo **philos, t_philos_params *params, \
+int *error);
 void	*philosopher_thread(void *philosopher_casted_to_void);
 
 # include "common_tools.h"
