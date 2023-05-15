@@ -5,12 +5,11 @@ static void	stop_philosophers(t_philos_params *params);
 static bool	is_philosopher_dead(t_philo *philo);
 
 //this will start the simulation by unlocking the "start simulation mutex"
-void	*monitor_routine(void *philos_casted_to_void)
+void	*monitor_thread(void *philos_casted_to_void)
 {
 	t_philo *philos;
 
 	philos = (t_philo *)philos_casted_to_void;
-	philos->params->start_time = get_current_time();
 	while (true)
 		if (check_if_a_philo_died(philos))
 			return (NULL);
@@ -59,8 +58,6 @@ static bool	is_philosopher_dead(t_philo *philo)
 	pthread_mutex_lock(&philo->predicted_death_time_mutex);
 	return_value =
 			timeval_compare(philo->predicted_death_time, current_time) <= 0;
-	if (return_value)
-		printf("*philo->predicted_death_time : %lli\n", get_timestamp(philo, philo->predicted_death_time));
 	pthread_mutex_unlock(&philo->predicted_death_time_mutex);
 	return (return_value);
 }

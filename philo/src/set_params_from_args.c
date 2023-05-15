@@ -24,11 +24,11 @@ void	set_params_from_args(char **argv, t_philos_params *params,
 	params->time_to_die = (int)ft_atoll(argv[2]);
 	params->time_to_eat = (int)ft_atoll(argv[3]);
 	params->time_to_sleep = (int)ft_atoll(argv[4]);
+	params->nb_of_meals_to_eat = INFINITE_EAT;
 	if (argv[5])
 		params->nb_of_meals_to_eat = (int)ft_atoll(argv[5]);
 	params->a_philo_died = false;
 	pthread_mutex_init(&params->a_philo_died_mutex, NULL);
-	pthread_mutex_init(&params->print_mutex, NULL);
 	pthread_mutex_init(&params->simulation_start_mutex, NULL);
 	pthread_mutex_lock(&params->simulation_start_mutex);
 }

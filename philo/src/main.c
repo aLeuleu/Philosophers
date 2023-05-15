@@ -40,13 +40,14 @@ int	main(int argc, char **argv)
 static void create_monitor_thread_and_start_simulation(pthread_t *monitor, t_philo *philosophers, int *error)
 {
 
-	if (pthread_create(monitor, NULL, &monitor_routine, philosophers) != 0)
+	philosophers->params->start_time = get_current_time();
+	pthread_mutex_unlock(&philosophers->params->simulation_start_mutex);
+	if (pthread_create(monitor, NULL, &monitor_thread, philosophers) != 0)
 	{
 		*error = THREAD_CREATION_ERROR;
 		error_msg(*error);
 		return ;
 	}
-	pthread_mutex_unlock(&philosophers->params->simulation_start_mutex);
 	pthread_join(*monitor, NULL);
 }
 

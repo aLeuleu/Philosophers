@@ -69,7 +69,7 @@ void	sleep_till(const struct timeval goal, const t_philo *philo)
 	while (timeval_compare(goal, current_time) > 0
 		   && all_philos_are_alive(philo->params))
 	{
-		usleep(100);
+		usleep(500);
 		current_time = get_current_time();
 	}
 }

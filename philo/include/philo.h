@@ -37,7 +37,6 @@ typedef struct s_philos_params
 	bool			a_philo_died;
 	pthread_mutex_t	a_philo_died_mutex;
 	pthread_mutex_t	simulation_start_mutex;
-	pthread_mutex_t	print_mutex;
 }					t_philos_params;
 
 typedef struct s_philo
@@ -61,7 +60,7 @@ void	set_params_from_args(char **argv,
 void	init_all_philosophers(t_philo **philos,
 							  t_philos_params *params,
 							  int *error);
-void	*monitor_routine(void *philos_casted_to_void);
+void	*monitor_thread(void *philos_casted_to_void);
 void	start_all_philosophers_threads(t_philo *philos,
 									   t_philos_params *params, int *error);
 void	create_all_philosophers(t_philo **philos, t_philos_params *params,
