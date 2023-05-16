@@ -43,7 +43,7 @@ static bool	check_if_a_philo_died(t_philo *philo)
 			stop_philosophers(philo->params);
 			printf("%lli\t%i died\n", \
 					get_timestamp(philo, get_current_time()), \
-				philo[i].id);
+				philo[i].id + 1);
 			return (true);
 		}
 		check_if_philo_has_eat_all_meals(&philo_has_finished, i, philo);

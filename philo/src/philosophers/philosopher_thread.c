@@ -20,6 +20,13 @@ void	*philosopher_thread(void *philosopher_casted_to_void)
 
 	philo = (t_philo *)philosopher_casted_to_void;
 	init_philosopher_thread(philo, philo->params);
+	if (philo->params->nb_philos == 1)
+	{
+		pthread_mutex_lock(&philo->right_fork_mutex);
+		print_state_change("%lli\t%i has taken a fork\n", \
+			philo, philo->params);
+		usleep(philo->params->time_to_die * 1000);
+	}
 	while (true)
 	{
 		if (philosopher_eats(philo) < 0)

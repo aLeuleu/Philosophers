@@ -44,10 +44,7 @@ static void	set_all_left_forks(t_philo *philos, t_philos_params *params,
 	if (*error)
 		return ;
 	if (params->nb_philos == 1)
-	{
-		philos[0].left_fork_mutex = &philos[0].right_fork_mutex;
 		return ;
-	}
 	philos[0].left_fork_mutex = &philos[params->nb_philos].right_fork_mutex;
 	i = 0;
 	while (++i < params->nb_philos && !*error)
