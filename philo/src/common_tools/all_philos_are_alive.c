@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common_tools.h"
+#include "philo.h"
 
 //returns false if any philo died
 bool	all_philos_are_alive(t_philos_params *params)

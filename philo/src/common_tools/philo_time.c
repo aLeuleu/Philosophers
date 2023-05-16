@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_time.h"
+#include "philo.h"
 
 struct timeval	get_current_time(void)
 {

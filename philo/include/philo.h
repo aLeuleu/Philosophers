@@ -17,6 +17,8 @@
 # define MUTEX_INIT_ERROR -3
 # define THREAD_CREATION_ERROR -4
 # define INFINITE_EAT -1
+# define NB_OF_USECONDS_IN_A_SECOND 1000000
+# define NB_OF_USECONDS_IN_A_MILLISECOND 1000
 # include <limits.h>
 # include <pthread.h>
 # include <stdbool.h>
@@ -44,6 +46,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		pthread;
 	bool			has_started;
+	pthread_mutex_t	has_started_mutex;
 	int				nb_meals_eaten;
 	pthread_mutex_t	nb_meals_eaten_mutex;
 	struct timeval	predicted_death_time;
@@ -53,21 +56,31 @@ typedef struct s_philo
 	t_philos_params	*params;
 }	t_philo;
 
-void	check_args(int argc, char **argv, int *error);
-void	set_params_from_args(char **argv, \
+void			error_msg(int code);
+long long		ft_atoll(const char *str);
+bool			all_philos_are_alive(t_philos_params *params);
+int				print_state_change(const char *format, t_philo *philosopher, \
+				t_philos_params *params);
+int				philosopher_eats(t_philo *philo);
+int				philosopher_sleeps(t_philo *philo);
+void			check_args(int argc, char **argv, int *error);
+void			set_params_from_args(char **argv, \
 t_philos_params *params, \
 int *error);
-void	init_all_philosophers(t_philo **philos, \
+void			init_all_philosophers(t_philo **philos, \
 t_philos_params *params, \
 int *error);
-void	*monitor_thread(void *philos_casted_to_void);
-void	start_all_philosophers_threads(t_philo *philos, \
+void			*monitor_thread(void *philos_casted_to_void);
+void			start_all_philosophers_threads(t_philo *philos, \
 t_philos_params *params, int *error);
-void	create_all_philosophers(t_philo **philos, t_philos_params *params, \
-int *error);
-void	*philosopher_thread(void *philosopher_casted_to_void);
-
-# include "common_tools.h"
-# include "philo_time.h"
-# include "philo_tools.h"
+void			create_all_philosophers(t_philo **philos, \
+t_philos_params *params, int *error);
+void			*philosopher_thread(void *philosopher_casted_to_void);
+struct timeval	get_current_time(void);
+long long		get_timestamp(const t_philo *philo, \
+const struct timeval current_time);
+void			timeval_add_ms(struct timeval *tv, const int n);
+int				timeval_compare(const struct timeval t1,
+					const struct timeval t2);
+void			sleep_till(const struct timeval goal, const t_philo *philo);
 #endif // PHILO_H

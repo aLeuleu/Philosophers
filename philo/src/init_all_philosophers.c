@@ -12,11 +12,10 @@
 
 #include "philo.h"
 
-static void	init_one_philo(t_philo *philo, int id, t_philos_params *params,
-				int *error);
+static void	init_one_philo(t_philo *philo, int id, t_philos_params *params);
 static void	set_all_left_forks(t_philo *philos, t_philos_params *params,
 				int *error);
-static void	create_right_fork_for_this_philo(t_philo *philo, int *error);
+static void	create_right_fork_for_this_philo(t_philo *philo);
 
 //for each philos :
 // - set the id
@@ -33,7 +32,7 @@ void	init_all_philosophers(t_philo **philos, t_philos_params *params, \
 		return ;
 	i = -1;
 	while (++i < params->nb_philos && !*error)
-		init_one_philo(&(*philos)[i], i, params, error);
+		init_one_philo(&(*philos)[i], i, params);
 	set_all_left_forks(*philos, params, error);
 }
 
@@ -50,22 +49,16 @@ static void	set_all_left_forks(t_philo *philos, t_philos_params *params,
 		philos[i].left_fork_mutex = &philos[i - 1].right_fork_mutex;
 }
 
-static void	init_one_philo(t_philo *philo, int id, t_philos_params *params,
-		int *error)
+static void	init_one_philo(t_philo *philo, int id, t_philos_params *params)
 {
 	philo->id = id;
 	philo->nb_meals_eaten = 0;
 	philo->params = params;
 	philo->has_started = false;
-	create_right_fork_for_this_philo(philo, error);
+	create_right_fork_for_this_philo(philo);
 }
 
-static void	create_right_fork_for_this_philo(t_philo *philo, int *error)
+static void	create_right_fork_for_this_philo(t_philo *philo)
 {
-	*error = pthread_mutex_init(&philo->right_fork_mutex, NULL);
-	if (*error)
-	{
-		*error = MUTEX_INIT_ERROR;
-		return (error_msg(*error));
-	}
+	pthread_mutex_init(&philo->right_fork_mutex, NULL);
 }

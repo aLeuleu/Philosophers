@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common_tools.h"
+#include "philo.h"
 
 int	print_state_change(const char *format, t_philo *philosopher,
 		t_philos_params *params)

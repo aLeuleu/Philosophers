@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common_tools.h"
+#include "philo.h"
 
 //display error message depending on the error code
 void	error_msg(int code)
@@ -20,6 +20,4 @@ void	error_msg(int code)
 		printf("invalid arguments.\n");
 	if (code == MALLOC_ERROR)
 		printf("memory allocation failure.\n");
-	if (code == MUTEX_INIT_ERROR)
-		printf("mutex initialisation failure.\n");
 }

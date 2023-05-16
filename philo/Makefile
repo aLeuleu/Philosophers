@@ -6,16 +6,13 @@
 #    By: alevra <alevra@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 16:18:39 by alevra            #+#    #+#              #
-#    Updated: 2023/02/16 18:56:56 by alevra           ###   ########.fr        #
+#    Updated: 2023/05/16 10:06:59 by alevra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 HEADERS =	include/philo.h \
-         	include/common_tools.h \
-         	include/philo_tools.h \
-         	include/philo_time.h \
 
 SRC =	main.c \
        	check_args.c \
@@ -35,16 +32,13 @@ SRC =	main.c \
 
 BONUS_FLAG = #-DBONUS_FLAG
 FLAGS = -Wall -Wextra -Werror
-FSAN = #-fsanitize=thread
+FSAN = -fsanitize=address
 OBJ = $(addprefix obj/,$(SRC:.c=.o))
 OBJ_BONUS = $(addprefix bonus/,$(SRC:.c=.o))
 INCLUDE_LIBFT = #-I libft
 LINK_LIBFT = #-L ./libft -lft
 LIBFT = #libft/libft.a
 INCLUDE_HEADERS = -I include
-
-
-
 
 all	: create_obj_folder
 	#make -C libft
@@ -58,7 +52,7 @@ bonus/%.o : src/%.c $(HEADERS) Makefile
 	cc -c -g3 -O3 ${FLAGS} $(FSAN) $(BONUS_FLAG) $(INCLUDE_LIBFT) $(INCLUDE_HEADERS) $< -o $@
 
 $(NAME): $(LIBFT) $(OBJ)
-	cc $(OBJ) $(FSAN) -g3  $(LINK_LIBFT) -o $(NAME)
+	cc $(OBJ) $(FSAN) -g3 -lpthread $(LINK_LIBFT) -o $(NAME)
 
 $(NAME)_bonus: libft/libft.a $(OBJ_BONUS)
 	cc $(OBJ_BONUS) $(FSAN) -g3 $(LINK_LIBFT) -o $(NAME)_bonus

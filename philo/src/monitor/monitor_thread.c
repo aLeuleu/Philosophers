@@ -15,11 +15,13 @@
 static bool	check_if_a_philo_died(t_philo *philo);
 static void	stop_philosophers(t_philos_params *params);
 static bool	is_philosopher_dead(t_philo *philo);
+static void	check_if_philo_has_eat_all_meals(int *philo_has_finished, \
+int i, t_philo *philo);
 
 //this will start the simulation by unlocking the "start simulation mutex"
 void	*monitor_thread(void *philos_casted_to_void)
 {
-	t_philo *philos;
+	t_philo	*philos;
 
 	philos = (t_philo *)philos_casted_to_void;
 	while (true)
@@ -44,20 +46,23 @@ static bool	check_if_a_philo_died(t_philo *philo)
 				philo[i].id);
 			return (true);
 		}
-		if (philo->params->nb_of_meals_to_eat > 0)
-		{
-			pthread_mutex_lock(&philo[i].nb_meals_eaten_mutex);
-			philo_has_finished += philo[i].nb_meals_eaten >= philo->params->nb_of_meals_to_eat;
-			pthread_mutex_unlock(&philo[i].nb_meals_eaten_mutex);
-		}
+		check_if_philo_has_eat_all_meals(&philo_has_finished, i, philo);
 	}
 	if (philo_has_finished == philo->params->nb_philos)
+		return (stop_philosophers(philo->params), true);
+	return (usleep(1000), false);
+}
+
+static void	check_if_philo_has_eat_all_meals(int *philo_has_finished, \
+int i, t_philo *philo)
+{
+	if (philo->params->nb_of_meals_to_eat != INFINITE_EAT)
 	{
-		stop_philosophers(philo->params);
-		return (true);
+		pthread_mutex_lock(&philo[i].nb_meals_eaten_mutex);
+		*philo_has_finished += philo[i].nb_meals_eaten >= \
+		philo->params->nb_of_meals_to_eat;
+		pthread_mutex_unlock(&philo[i].nb_meals_eaten_mutex);
 	}
-	usleep(1000);
-	return (false);
 }
 
 static bool	is_philosopher_dead(t_philo *philo)
@@ -65,10 +70,12 @@ static bool	is_philosopher_dead(t_philo *philo)
 	const struct timeval	current_time = get_current_time();
 	bool					return_value;
 
-	if (philo->has_started == false)
-		return (false);
+	pthread_mutex_lock(&philo->has_started_mutex);
+	if (!philo->has_started)
+		return (pthread_mutex_unlock(&philo->has_started_mutex), false);
+	pthread_mutex_unlock(&philo->has_started_mutex);
 	pthread_mutex_lock(&philo->predicted_death_time_mutex);
-	return_value =
+	return_value = \
 			timeval_compare(philo->predicted_death_time, current_time) <= 0;
 	pthread_mutex_unlock(&philo->predicted_death_time_mutex);
 	return (return_value);
