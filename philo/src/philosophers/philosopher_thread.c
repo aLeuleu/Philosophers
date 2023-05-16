@@ -44,6 +44,9 @@ static void	init_philosopher_thread(t_philo *philo, t_philos_params *params)
 	philo->predicted_death_time = params->start_time;
 	timeval_add_ms(&philo->predicted_death_time, params->time_to_die);
 	pthread_mutex_unlock(&philo->predicted_death_time_mutex);
+	pthread_mutex_lock(&philo->has_started_mutex);
+	philo->has_started = true;
+	pthread_mutex_unlock(&philo->has_started_mutex);
 	if (philo->id % 2)
 	{
 		tmp = params->start_time;

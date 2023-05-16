@@ -11,14 +11,12 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
 
 static void	create_monitor_thread_and_start_simulation(pthread_t *monitor, \
 														t_philo *philosophers, \
 														int *error);
 static void	clean_up(t_philo *philos);
 static void	destroy_this_philo_fork(t_philo *philosopher);
-
 void		*philosopher_thread(void *philosopher_casted_to_void);
 
 int	main(int argc, char **argv)
