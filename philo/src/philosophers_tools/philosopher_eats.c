@@ -69,12 +69,13 @@ static int	take_forks(t_philo *philo)
 static int	take_fork(t_philo *philo, pthread_mutex_t *fork_mutex)
 {
 	pthread_mutex_lock(fork_mutex);
-	if (print_state_change("%lli\t%i has taken a fork\n", \
+	if (print_state_change("%lli\t%i has taken a fork \n", \
 			philo, philo->params) < 0)
 	{
 		pthread_mutex_unlock(fork_mutex);
 		return (-1);
 	}
+
 	return (0);
 }
 
