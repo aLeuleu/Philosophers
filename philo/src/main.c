@@ -15,7 +15,7 @@
 static void	create_monitor_thread_and_start_simulation(pthread_t *monitor, \
 														t_philo *philosophers, \
 														int *error);
-static void	clean_up(t_philo *philos);
+static void	clean_up(t_philo *philos, int *error);
 static void	destroy_this_philo_fork(t_philo *philosopher);
 void		*philosopher_thread(void *philosopher_casted_to_void);
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	init_all_philosophers(&philos, &params, &error);
 	start_all_philosophers_threads(philos, &params, &error);
 	create_monitor_thread_and_start_simulation(&monitor, philos, &error);
-	clean_up(philos);
+	clean_up(philos, &error);
 	return (error);
 }
 
@@ -47,10 +47,12 @@ static void	create_monitor_thread_and_start_simulation(pthread_t *monitor,
 	pthread_join(*monitor, NULL);
 }
 
-static void	clean_up(t_philo *philos)
+static void	clean_up(t_philo *philos, int *error)
 {
 	int	size;
 
+	if (*error)
+		return ;
 	size = philos->params->nb_philos;
 	while (size--)
 		pthread_join(philos[size].pthread, NULL);

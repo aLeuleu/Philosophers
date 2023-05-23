@@ -75,7 +75,6 @@ static int	take_fork(t_philo *philo, pthread_mutex_t *fork_mutex)
 		pthread_mutex_unlock(fork_mutex);
 		return (-1);
 	}
-
 	return (0);
 }
 
